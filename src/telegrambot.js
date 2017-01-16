@@ -126,7 +126,7 @@ module.exports = class TelegramBot {
                             console.log('Response as text message');
                             this.reply({
                                 chat_id: chatId,
-                                text: responseText
+                                text: responseText+"Hey"
                             });
                             TelegramBot.createResponse(res, 200, 'Message processed');
 
