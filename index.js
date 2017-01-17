@@ -42,11 +42,11 @@ restService.post('/hook', function (req, res) {
                     if(action == 'timetable.read')
                     {
                         speech +='/';
-                        var newPostKey = firebase.database().ref().child('posts').push().set(
+                        /*var newPostKey = firebase.database().ref().child('posts').push().set(
                         {
                             username: "Hey",
-                            email: "it works"
-                        });
+                            email: "it ow"
+                        });*/
                         var query = firebase.database().ref('users/rosy/timetable/friday');
                         query.once('value').then(function(snapshot) {
                             speech += snapshot.val();
@@ -58,12 +58,17 @@ restService.post('/hook', function (req, res) {
 
         console.log('result: ', speech);
 
+        var query = firebase.database().ref('users/rosy/timetable/friday');
+        query.once('value').then(function(snapshot) {
+            speech += snapshot.val();
         return res.json({                                 //the return
             speech: speech,
             action: action,
             displayText: speech,
             source: 'persa-custom-webhook'
         });
+        });
+
     } catch (err) {
         console.error("Can't process request", err);
 
