@@ -18,9 +18,9 @@ restService.use(bodyParser.json());
 restService.post('/hook', function (req, res) {
 
     console.log('hook request');
-
+    firebase.initializeApp(config);
+    console.log('Firebase initialized');
     try {
-        firebase.initializeApp(config);
 
         var speech = 'empty speech';
         var action = '';
