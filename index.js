@@ -51,14 +51,12 @@ restService.post('/hook', function (req, res) {
 
         console.log('result: ', speech);
 
-        /*return res.json({                                 //the return
+        return res.json({                                 //the return
             speech: speech,
             action: action,
             displayText: speech,
-            parameters: requestBody.result.parameters,
-            source: 'persa-webhook'
-        });*/
-        return req;
+            source: 'persa-custom-webhook'
+        });
     } catch (err) {
         console.error("Can't process request", err);
 
