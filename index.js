@@ -42,6 +42,11 @@ restService.post('/hook', function (req, res) {
                     if(action == 'timetable.read')
                     {
                         speech +='/';
+                        var newPostKey = firebase.database().ref().child('posts').push().set(
+                        {
+                            username: "Hey",
+                            email: "it works"
+                        });
                         var query = firebase.database().ref('users/rosy/timetable/friday');
                         query.once('value').then(function(snapshot) {
                             speech += snapshot.val();
