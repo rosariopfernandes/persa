@@ -39,6 +39,13 @@ restService.post('/hook', function (req, res) {
                 if (requestBody.result.action) {
                     //speech += 'action: ' + requestBody.result.action;
                     action += requestBody.result.action;
+                    if(action == 'timetable.read')
+                    {
+                        var query = firebase.database().ref('users/rosy/timetable/friday');
+                        query.once('value').then(function(snapshot) {
+                            speech += snapshot.val();
+                        });
+                    }
                 }
             }
         }
