@@ -3,13 +3,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const firebase = require("firebase");
-const config = {
+const fbconfig = {
     apiKey: "AIzaSyBLxDcSTP5_nc1sLaGz03NCYBB3-u70AAM",
     authDomain: "persa-3a8b4.firebaseapp.com",
     databaseURL: "https://persa-3a8b4.firebaseio.com",
     storageBucket: "persa-3a8b4.appspot.com",
     messagingSenderId: "1053030430140"
 };
+firebase.initializeApp(fbconfig);
 
 
 const restService = express();
@@ -18,7 +19,6 @@ restService.use(bodyParser.json());
 restService.post('/hook', function (req, res) {
 
     console.log('hook request');
-    firebase.initializeApp(config);
     console.log('Firebase initialized');
     try {
 
