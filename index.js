@@ -42,7 +42,7 @@ restService.post('/hook', function (req, res) {
                     action += requestBody.result.action;
                 }
 
-                if(requestBody.result.paremeters)
+                if(requestBody.result.parameters)
                 {
                     parameters = requestBody.result.parameters;
                 }
