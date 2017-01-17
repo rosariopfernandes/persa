@@ -12,7 +12,19 @@ restService.post('/hook', function (req, res) {
     console.log('hook request');
 
     try {
+        var firebase = require("firebase");
+        var config = {
+            apiKey: "AIzaSyBLxDcSTP5_nc1sLaGz03NCYBB3-u70AAM",
+            authDomain: "persa-3a8b4.firebaseapp.com",
+            databaseURL: "https://persa-3a8b4.firebaseio.com",
+            storageBucket: "persa-3a8b4.appspot.com",
+            messagingSenderId: "1053030430140"
+        };
+        firebase.initializeApp(config);
+
         var speech = 'empty speech';
+        var action = '';
+        var parameters;
 
         if (req.body) {
             var requestBody = req.body;
@@ -26,18 +38,25 @@ restService.post('/hook', function (req, res) {
                 }
 
                 if (requestBody.result.action) {
-                    speech += 'action: ' + requestBody.result.action;
-                    speech += ' he ';
+                    //speech += 'action: ' + requestBody.result.action;
+                    action += requestBody.result.action;
+                }
+
+                if(requestBody.result.paremeters)
+                {
+                    parameters = requestBody.result.parameters;
                 }
             }
         }
 
         console.log('result: ', speech);
 
-        return res.json({
+        return res.json({                                 //the return
             speech: speech,
+            action: action,
             displayText: speech,
-            source: 'apiai-webhook-sample'
+            parameters: parameters,
+            source: 'persa-webhook'
         });
     } catch (err) {
         console.error("Can't process request", err);
