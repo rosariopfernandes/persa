@@ -58,7 +58,7 @@ restService.post('/hook', function (req, res) {
             parameters: parameters,
             source: 'persa-webhook'
         });*/
-        return req;
+        return req.body;
     } catch (err) {
         console.error("Can't process request", err);
 
