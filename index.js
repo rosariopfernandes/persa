@@ -55,7 +55,7 @@ restService.post('/hook', function (req, res) {
             speech: speech,
             action: action,
             displayText: speech,
-            parameters: parameters,
+            parameters: requestBody.result.parameters,
             source: 'persa-webhook'
         });*/
         return req;
