@@ -41,32 +41,27 @@ restService.post('/hook', function (req, res) {
                     action += requestBody.result.action;
                     if(action == 'timetable.read')
                     {
-                        /*var newPostKey = firebase.database().ref().child('posts').push().set(
-                        {
-                            username: "Hey",
-                            email: "it ow"
-                        });*/
-
-        var query = firebase.database().ref('users/rosy/timetable/"'+requestBody.result.parameters.weekday+'"');
-        query.once('value').then(function(snapshot) {
+                        var query = firebase.database().ref('users/rosy/timetable/"'+requestBody.result.parameters.weekday+'"');
+                        query.once('value').then(function(snapshot) {
             //speech += snapshot.val();
-            snapshot.forEach(function(childSnapshot) {
-                speech += childSnapshot.val() + ' at ' + childSnapshot.key+', \n';
+                        snapshot.forEach(function(childSnapshot) {
+                        speech += childSnapshot.val() + ' at ' + childSnapshot.key+', \n';
                 //var eName = childSnapshot.val().resultname;
-        });
-        });
+                            });
+                            return res.json({                                 //the return
+                            speech: speech,
+                            action: action,
+                            displayText: speech,
+                            source: 'my-persa-webhook'
+                            });
+                        });
                     }
                 }
             }
         }
 
         console.log('result: ', speech);
-        return res.json({                                 //the return
-            speech: speech,
-            action: action,
-            displayText: speech,
-            source: 'my-persa-webhook'
-        });
+        
 
     } catch (err) {
         console.error("Can't process request", err);
