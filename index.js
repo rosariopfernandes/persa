@@ -24,6 +24,7 @@ restService.post('/hook', function (req, res) {
 
         var speech = 'empty speech';
         var action = '';
+        var rootRef = firebase.database().ref();
 
         if (req.body) {
             var requestBody = req.body;
@@ -41,19 +42,56 @@ restService.post('/hook', function (req, res) {
                     action += requestBody.result.action;
                     if(action == 'timetable.read')
                     {
-                        var query = firebase.database().ref('users/rosy/timetable/"'+requestBody.result.parameters.weekday+'"');
-                        query.once('value').then(function(snapshot) {
-            //speech += snapshot.val();
-                        snapshot.forEach(function(childSnapshot) {
-                        speech += childSnapshot.val() + ' at ' + childSnapshot.key+', \n';
-                //var eName = childSnapshot.val().resultname;
+                        if(requestBody.result.parameters.weekday)
+                        {
+                            var query = rootRef.child('users/rosy/timetable/"'+requestBody.result.parameters.weekday+'"');
+                            query.once('value').then(function(snapshot) {
+                //speech += snapshot.val();
+                            snapshot.forEach(function(childSnapshot) {
+                            speech += childSnapshot.val() + ' at ' + childSnapshot.key+', \n';
+                    //var eName = childSnapshot.val().resultname;
+                                });
+                                return res.json({                                 //the return
+                                speech: speech,
+                                action: action,
+                                displayText: speech,
+                                source: 'my-persa-webhook'
+                                });
                             });
-                            return res.json({                                 //the return
+                        }
+                        else
+                        {
+                                return res.json({                                 //the return
+                                speech: speech,
+                                action: action,
+                                displayText: speech,
+                                source: 'my-persa-webhook'
+                                });
+                        }
+                    }
+                    if(action == 'timetable.create')
+                    {
+                        var subject;
+                        var weekday;
+                        var time;
+                        if(requestBody.result.parameters.subject)
+                        {
+                            subject = requestBody.result.parameters.subject;
+                            if(requestBody.result.parameters.weekday)
+                            {
+                                weekday = requestBody.result.parameters.weekday;
+                                if(requestBody.result.parameters.time)
+                                {
+                                    time = requestBody.result.parameters.time;
+                                    rootRef.child('users/rosy/timetable/'+weekday+'/'+time).set(subject);
+                                }
+                            }
+                        }
+                        return res.json({                                 //the return
                             speech: speech,
                             action: action,
                             displayText: speech,
                             source: 'my-persa-webhook'
-                            });
                         });
                     }
                 }
@@ -61,7 +99,7 @@ restService.post('/hook', function (req, res) {
         }
 
         console.log('result: ', speech);
-        
+
 
     } catch (err) {
         console.error("Can't process request", err);
