@@ -54,7 +54,7 @@ restService.post('/hook', function (req, res) {
 
         console.log('result: ', speech);
 
-        var query = firebase.database().ref('users/rosy/timetable/friday');
+        var query = firebase.database().ref('users/rosy/timetable');
         query.once('value').then(function(snapshot) {
             speech += snapshot.val();
             firebase.database().ref('users/rosy/ha').set(snapshot.val());
