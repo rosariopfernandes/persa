@@ -47,10 +47,6 @@ restService.post('/hook', function (req, res) {
                             username: "Hey",
                             email: "it ow"
                         });*/
-                        var query = firebase.database().ref('users/rosy/timetable/friday');
-                        query.once('value').then(function(snapshot) {
-                            speech += snapshot.val();
-                        });
                     }
                 }
             }
@@ -65,7 +61,7 @@ restService.post('/hook', function (req, res) {
             speech: speech,
             action: action,
             displayText: speech,
-            source: 'persa-custom-webhook'
+            source: 'my-persa-webhook'
         });
         });
 
