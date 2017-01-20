@@ -59,7 +59,7 @@ restService.post('/hook', function (req, res) {
         query.once('value').then(function(snapshot) {
             //speech += snapshot.val();
             snapshot.forEach(function(childSnapshot) {
-                speech += childSnapshot.val() + 'at' + childSnapshot.key;
+                speech += childSnapshot.val() + ' at ' + childSnapshot.key+', \n';
                 //var eName = childSnapshot.val().resultname;
         });
         return res.json({                                 //the return
