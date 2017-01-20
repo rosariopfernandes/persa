@@ -46,12 +46,6 @@ restService.post('/hook', function (req, res) {
                             username: "Hey",
                             email: "it ow"
                         });*/
-                    }
-                }
-            }
-        }
-
-        console.log('result: ', speech);
 
         var query = firebase.database().ref('users/rosy/timetable/"'+requestBody.result.parameters.weekday+'"');
         query.once('value').then(function(snapshot) {
@@ -60,12 +54,18 @@ restService.post('/hook', function (req, res) {
                 speech += childSnapshot.val() + ' at ' + childSnapshot.key+', \n';
                 //var eName = childSnapshot.val().resultname;
         });
+        });
+                    }
+                }
+            }
+        }
+
+        console.log('result: ', speech);
         return res.json({                                 //the return
             speech: speech,
             action: action,
             displayText: speech,
             source: 'my-persa-webhook'
-        });
         });
 
     } catch (err) {
