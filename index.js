@@ -44,11 +44,15 @@ restService.post('/hook', function (req, res) {
                     {
                         if(requestBody.result.parameters.weekday)
                         {
-                            var query = rootRef.child('users/rosy/timetable/"'+requestBody.result.parameters.weekday+'"');
+                            var weekday = requestBody.result.parameters.weekday;
+                            var query = rootRef.child('users/rosy/timetable/'+ weekday);
                             query.once('value').then(function(snapshot) {
                 //speech += snapshot.val();
                             snapshot.forEach(function(childSnapshot) {
-                            speech += childSnapshot.val() + ' at ' + childSnapshot.key+', \n';
+                                if(childSnapshot!=null)
+                                    speech += childSnapshot.val() + ' at ' + childSnapshot.key+', \n';
+                                else
+                                    speech = 'You have no classes on '+weekday;
                     //var eName = childSnapshot.val().resultname;
                                 });
                                 return res.json({                                 //the return
