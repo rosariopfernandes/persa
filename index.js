@@ -49,7 +49,7 @@ restService.post('/hook', function (req, res) {
                             query.once('value').then(function(snapshot) {
                 //speech += snapshot.val();
                             snapshot.forEach(function(childSnapshot) {
-                                if(childSnapshot!=null)
+                                if(childSnapshot.val()!=null)
                                     speech += childSnapshot.val() + ' at ' + childSnapshot.key+', \n';
                                 else
                                     speech = 'You have no classes on '+weekday;
@@ -58,6 +58,7 @@ restService.post('/hook', function (req, res) {
                                 return res.json({                                 //the return
                                 speech: speech,
                                 action: action,
+                                emoji: ":)",
                                 displayText: speech,
                                 source: 'my-persa-webhook'
                                 });
